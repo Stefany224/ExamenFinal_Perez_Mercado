@@ -1,0 +1,122 @@
+.col-panel-izq {
+  background: white;
+  border-radius: var(--ls-radius);
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 1px solid #e2e8f0;
+  height: fit-content;
+  position: sticky;
+  top: 1rem;
+}
+.col-panel-der {
+  background: white;
+  border-radius: var(--ls-radius);
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 1px solid #e2e8f0;
+  min-height: 400px;
+}
+
+.panel-titulo {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ls-primary);
+  margin-bottom: 0.25rem;
+}
+.panel-subtitulo {
+  font-size: 0.875rem;
+  color: var(--ls-muted);
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--ls-text);
+}
+
+#loader {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 2rem 0;
+  color: var(--ls-primary);
+}
+#loader .spinner-border {
+  width: 2rem;
+  height: 2rem;
+}
+#loader p {
+  font-size: 0.875rem;
+  color: var(--ls-muted);
+  margin: 0;
+}
+
+.badge-estado {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.22em 0.65em;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.badge-estado--publicada  { background: #d1fae5; color: #065f46; }
+.badge-estado--adjudicada { background: #dbeafe; color: #1e40af; }
+.badge-estado--revocada   { background: #fee2e2; color: #991b1b; }
+.badge-estado--desierta   { background: #fef3c7; color: #92400e; }
+.badge-estado--cerrada    { background: #f3f4f6; color: #374151; }
+.badge-estado--suspendida { background: #ede9fe; color: #5b21b6; }
+
+.licitacion-item {
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.15s ease;
+}
+.licitacion-item:hover,
+.licitacion-item:focus {
+  background: #f0f4f8;
+  outline: 2px solid var(--ls-primary);
+  outline-offset: 1px;
+}
+
+.pagination .page-link {
+  color: var(--ls-primary);
+  border-color: #dee2e6;
+  font-size: 0.82rem;
+}
+.pagination .page-item.active .page-link {
+  background-color: var(--ls-primary);
+  border-color: var(--ls-primary);
+  color: white;
+}
+.pagination .page-link:hover {
+  background: rgba(26,74,122,0.08);
+  color: var(--ls-primary);
+}
+
+.detalle-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: var(--ls-muted);
+  text-align: center;
+}
+.detalle-vacio i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.4;
+}
+
+@media (max-width: 991px) {
+  .col-panel-izq { position: static; }
+  .col-panel-der { min-height: 200px; }
+}
+@media (max-width: 768px) {
+  .col-panel-izq,
+  .col-panel-der { padding: 1rem; }
+}

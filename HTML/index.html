@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LicitaSeguro</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="../CSS/style.css" rel="stylesheet">
+</head>
+
+<body data-pagina="home">
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm" aria-label="Navegacion principal">
+      <div class="container">
+
+        <a class="navbar-brand" href="index.html">
+          Licita<span>Seguro</span>
+        </a>
+
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navMenu"
+                aria-controls="navMenu" aria-expanded="false"
+                aria-label="Abrir o cerrar menu de navegacion">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav ms-auto gap-2" role="list">
+            <li class="nav-item" role="listitem">
+              <a class="nav-link active" aria-current="page" href="#hero">Home</a>
+            </li>
+            <li class="nav-item" role="listitem">
+              <a class="nav-link" href="#servicios">Servicios</a>
+            </li>
+            <li class="nav-item" role="listitem">
+              <a class="nav-link" href="#formulario">Formulario</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section id="hero" class="hero-banner" aria-label="img principal LicitaSeguro">
+      <img
+        src="../IMG/Home.webp"
+        alt="Img inicial"
+        class="hero-img">
+    </section>
+
+    <section class="seccion-quienes py-5" aria-labelledby="quienes-titulo">
+      <div class="container">
+        <div class="row align-items-center g-4 g-lg-5">
+
+          <div class="col-12 col-md-5">
+            <img
+              src="../IMG/somos.webp"
+              alt="Equipo"
+              class="img-seccion rounded">
+          </div>
+
+          <div class="col-12 col-md-7">
+            <h2 id="quienes-titulo" class="seccion-titulo">¿Quienes Somos?</h2>
+            <p class="seccion-texto">Somos un equipo dedicado a facilitar el acceso a la información de compras publicas en Chile. 
+              Nuestra plataforma conecta a ciudadanos, proveedores y organismos públicos con los datos de Mercado Publico de forma clara y accesible.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="seccion-que-hacemos py-5 bg-light" aria-labelledby="que-hacemos-titulo">
+      <div class="container">
+        <div class="row align-items-center g-4 g-lg-5">
+
+          <div class="col-12 col-md-7">
+            <h2 id="que-hacemos-titulo" class="seccion-titulo">¿Que Hacemos?</h2>
+            <p class="seccion-texto">Facilitamos la busqueda y consulta de licitaciones publicas mediante filtros intuitivos por fecha y estado. 
+              Tambien permitimos consultar informacion detallada de proveedores registrados en el sistema de compras publicas.</p>
+            </a>
+          </div>
+
+          <div class="col-12 col-md-5">
+            <img
+              src="../IMG/hacer.webp"
+              alt="que hacemos referencial"
+              class="img-seccion rounded">
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <section id="servicios" class="seccion-servicios py-5" aria-labelledby="servicios-titulo">
+      <div class="container">
+
+        <h2 id="servicios-titulo" class="seccion-titulo text-center mb-5">Servicios</h2>
+
+        <!-- Servicio 1 -->
+        <div class="servicio-fila" role="article" aria-label="Servicio: Búsqueda de Licitaciones">
+          <div class="servicio-img-wrap">
+            <img
+              src="../IMG/licitaciones.webp"
+              alt="licitaciones"
+              class="servicio-img-circular">
+          </div>
+
+          <div class="servicio-card-texto">
+            <h3 class="servicio-nombre">Busqueda de Licitaciones</h3>
+            <p class="servicio-desc">Filtra por fecha y estado para encontrar licitaciones vigentes, adjudicadas, cerradas 
+              o revocadas directamente desde Mercado Publico.</p>
+            <a href="licitaciones.html" class="btn btn-outline-primary btn-sm">ver mas</a>
+          </div>
+        </div>
+
+        <!-- Servicio 2 -->
+        <div class="servicio-fila" role="article" aria-label="Servicio: Consulta de Proveedores">
+          <div class="servicio-img-wrap">
+            <img
+              src="../IMG/proveedores.webp"
+              alt="proveedores"
+              class="servicio-img-circular" >
+          </div>
+          <div class="servicio-card-texto">
+            <h3 class="servicio-nombre">Consulta de Proveedores</h3>
+            <p class="servicio-desc">Obten informacion detallada de cualquier empresa registrada en Mercado Publico ingresando su RUT.
+              Para acceder a información legitima.
+            </p>
+            <a href="proveedor.html" class="btn btn-outline-primary btn-sm">ver mas</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  <!-- Formulario de Contacto -->
+    <section id="formulario" class="seccion-formulario py-5" aria-labelledby="formulario-titulo">
+      <div class="container">
+
+        <h2 id="formulario-titulo" class="seccion-titulo text-center mb-4">Formulario</h2>
+
+        <div class="formulario-card mx-auto">
+          <form id="form-contacto" novalidate aria-label="Formulario de contacto">
+
+            <!-- Nombre -->
+            <div class="campo-con-icon mb-3">
+              <div class="campo-input-wrap">
+                <label for="contacto-nombre" class="form-label fw-medium">
+                  Nombre completo <span class="campo-requerido" aria-hidden="true"></span>
+                </label>
+
+                <input
+                  type="text"
+                  id="contacto-nombre"
+                  name="nombre"
+                  class="form-control campo-input"
+                  placeholder="Ingresa tu nombre completo"
+                  required
+                  aria-required="true"
+                  aria-describedby="contacto-nombre-error"
+                  tabindex="1">
+
+                <div id="contacto-nombre-error" class="invalid-feedback" role="alert" aria-live="polite"></div>
+              </div>
+              <div class="campo-icon-wrap" aria-hidden="true">
+                <i class="bi bi-person-fill campo-icon"></i>
+              </div>
+            </div>
+
+            <!-- gmail -->
+            <div class="campo-con-icon mb-3">
+              <div class="campo-input-wrap">
+                <label for="contacto-email" class="form-label fw-medium">
+                  Correo electronico <span class="campo-requerido" aria-hidden="true"></span>
+                </label>
+
+                <input
+                  type="email"
+                  id="contacto-email"
+                  name="email"
+                  class="form-control campo-input"
+                  placeholder="correo@ejemplo.com"
+                  required
+                  aria-required="true"
+                  aria-describedby="contacto-email-error"
+                  tabindex="2">
+
+                <div id="contacto-email-error" class="invalid-feedback" role="alert" aria-live="polite"></div>
+              </div>
+              <div class="campo-icon-wrap" aria-hidden="true">
+                <i class="bi bi-envelope-fill campo-icon"></i>
+              </div>
+            </div>
+
+            <!-- Mensaje -->
+            <div class="campo-con-icon mb-4">
+              <div class="campo-input-wrap">
+                <label for="contacto-mensaje" class="form-label fw-medium">
+                  Mensaje <span class="campo-requerido" aria-hidden="true"></span>
+                </label>
+
+                <textarea
+                  id="contacto-mensaje"
+                  name="mensaje"
+                  class="form-control campo-input"
+                  rows="3"
+                  placeholder="Escribe tu mensaje aqui"
+                  required
+                  aria-required="true"
+                  aria-describedby="contacto-mensaje-error"
+                  tabindex="3"></textarea>
+
+                <div id="contacto-mensaje-error" class="invalid-feedback" role="alert" aria-live="polite"></div>
+              </div>
+              <div class="campo-icon-wrap" aria-hidden="true">
+                <i class="bi bi-chat-text-fill campo-icon"></i>
+              </div>
+            </div>
+
+            <!-- Btn enviar -->
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary btn-enviar" tabindex="4"
+                      aria-label="Enviar formulario de contacto">
+                <i class="bi bi-send-fill me-2" aria-hidden="true"></i>enviar
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container text-center">
+      <p class="footer-brand">LicitaSeguro</p>
+      <p class="footer-sub mb-0">
+        Datos obtenidos desde la pagina oficial
+        <a href="https://api.mercadopublico.cl" target="_blank" rel="noopener noreferrer">
+          Mercado Publico
+        </a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../JS/config.js"></script>
+  <script src="../JS/utils.js"></script>
+  <script src="../JS/main.js"></script>
+
+</body>
+</html>

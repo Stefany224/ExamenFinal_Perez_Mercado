@@ -1,0 +1,35 @@
+footer {
+  background-color: #1c2233; 
+  color: #ffffff;
+  padding: 2rem 0;
+  margin-top: auto; 
+  width: 100%;
+  border-top: 3px solid var(--ls-primary); 
+}
+
+footer p {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+footer p:last-child {
+  margin-bottom: 0;
+}
+
+footer a {
+  color: #63b3ed; 
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+footer a:hover,
+footer a:focus {
+  color: #90cdf4;
+  text-decoration: underline;
+}
+
+.footer-brand {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}

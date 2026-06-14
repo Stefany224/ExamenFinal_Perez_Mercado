@@ -50,7 +50,7 @@ function validarFormularioContacto(event) {
   if (!email) {
     mostrarErrorCampo('contacto-email', 'El correo es obligatorio.');
     hayError = true;
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  } else if (!/^[a-zA-Z0-9]+([._-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-]?[a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$/.test(email)) {
     mostrarErrorCampo('contacto-email', 'Ingresa un correo electronico valido.');
     hayError = true;
   } else {
@@ -67,10 +67,9 @@ function validarFormularioContacto(event) {
 
   if (hayError) return;
 
-  // Si todo esta bn mostramos msm de exito
   document.getElementById('form-contacto').reset();
-  mostrarAlerta('form-contacto',
-    '¡Mensaje enviado correctamente! Te responderemos a la brevedad.',
-    'success'
-  );
+  mostrarAlerta('contacto-respuesta',
+  '¡Mensaje enviado correctamente! Te responderemos a la brevedad.',
+  'success'
+);
 }

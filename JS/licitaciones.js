@@ -8,7 +8,6 @@ async function buscarLicitaciones(event) {
   const paginacion   = document.getElementById('paginacion');
   const panelDetalle = document.getElementById('panel-detalle');
 
-  // Validamos que ambos campos esten completos
   let hayError = false;
 
   if (!fechaInput) {
@@ -27,12 +26,11 @@ async function buscarLicitaciones(event) {
 
   if (hayError) return;
 
-  // Limpiamos el estado anterior
   resultados.innerHTML = '';
   paginacion.innerHTML = '';
   if (panelDetalle) panelDetalle.innerHTML = `
-    <div class="detalle-vacio">
-      <i class="bi bi-arrow-left-circle" aria-hidden="true"></i>
+    <div class="detalle-vacio text-center py-5 text-muted">
+      <i class="bi bi-arrow-left-circle fs-1 d-block mb-3" aria-hidden="true"></i>
       <p>Selecciona una licitacion para ver su detalle.</p>
     </div>`;
 
@@ -55,7 +53,6 @@ async function buscarLicitaciones(event) {
       return;
     }
 
-    // iniciamos paginacion con todos los resultados
     iniciarPaginacion(datos.Listado, renderizarTarjetasLicitacion);
 
   } catch (error) {
@@ -69,7 +66,7 @@ async function buscarLicitaciones(event) {
   }
 }
 
-// funcion renderizar los items del listado para la pagina actual
+// funcion para renderizar los items del listado para la pagina actual
 function renderizarTarjetasLicitacion(licitaciones) {
   const contenedor = document.getElementById('resultados');
   if (!contenedor) return;
@@ -79,7 +76,7 @@ function renderizarTarjetasLicitacion(licitaciones) {
     return;
   }
 
-  // guardar referencia global para acceder al objeto completo por indice
+  // Guardamos los items de la página actual 
   window._paginaActual = licitaciones;
 
   const html = licitaciones.map((lic, index) => `
@@ -104,34 +101,95 @@ function renderizarTarjetasLicitacion(licitaciones) {
   contenedor.innerHTML = html;
 }
 
-// funcion para mostrar el detalle de una licitacion en el panel derecho
-function cargarDetalleLateral(index) {
+// Al hacer clic en una licitacion llamamos al endpoint de detalle
+async function cargarDetalleLateral(index) {
   const panel = document.getElementById('panel-detalle');
   if (!panel) return;
 
-  const lic = window._paginaActual[index];
-  if (!lic) return;
+  const licBasica = window._paginaActual[index];
+  if (!licBasica) return;
+
+  panel.innerHTML = `
+    <div class="d-flex justify-content-center align-items-center py-5">
+      <div class="spinner-border text-primary" role="status" aria-label="Cargando detalle"></div>
+    </div>`;
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  try {
+    const url = `${BASE_URL}/licitaciones.json?codigo=${encodeURIComponent(licBasica.CodigoExterno)}&ticket=${TICKET}`;
+    const respuesta = await fetch(url);
+    if (!respuesta.ok) throw new Error(`Error: ${respuesta.status}`);
+
+    const datos = await respuesta.json();
+
+    if (!datos.Listado || datos.Listado.length === 0) {
+      panel.innerHTML = `<div class="alert alert-warning">No se pudo cargar el detalle de esta licitacion.</div>`;
+      return;
+    }
+
+    const lic = datos.Listado[0];
+    renderizarDetalle(lic);
+
+  } catch (error) {
+    console.error('Error al cargar detalle:', error);
+    panel.innerHTML = `<div class="alert alert-danger">No se pudo conectar. Intenta nuevamente.</div>`;
+  }
+}
+
+// Renderizamos el detalle completo en el panel derecho
+function renderizarDetalle(lic) {
+  const panel = document.getElementById('panel-detalle');
+  if (!panel) return;
+
+  const subFechas = lic.Fechas || lic.fechas || {};
+  const fechaCierreRaw = subFechas.FechaCierre || subFechas.fechaCierre || lic.FechaCierre || lic.fechaCierre;
+  const fechaPublicacionRaw = subFechas.FechaPublicacion || subFechas.fechaPublicacion || lic.FechaPublicacion || lic.fechaPublicacion;
+
+  let diasRestantes = '';
+  if (fechaCierreRaw) {
+    const diff = Math.ceil((new Date(fechaCierreRaw) - new Date()) / (1000 * 60 * 60 * 24));
+    if (isNaN(diff)) {
+      diasRestantes = '';
+    } else if (diff > 0) {
+      diasRestantes = `(En ${diff} días)`;
+    } else if (diff === 0) {
+      diasRestantes = '(Cierra hoy)';
+    } else {
+      diasRestantes = '(Cerrada)';
+    }
+  }
 
   panel.innerHTML = `
     <div class="mb-3">
-      <span class="badge-estado badge-estado--${(lic.Estado||'').toLowerCase().replace(/\s/g,'-')} mb-2">
-        ${limpiarTexto(lic.Estado) || 'Sin estado'}
+      <span class="badge-estado badge-estado--${(lic.Estado||lic.estado||'').toLowerCase().replace(/\s/g,'-')} mb-2">
+        ${limpiarTexto(lic.Estado || lic.estado) || 'Sin estado'}
       </span>
-      <h3 class="fs-6 fw-bold lh-sm mt-2">${limpiarTexto(lic.Nombre) || 'Sin nombre'}</h3>
-      <small class="text-muted">Codigo: ${limpiarTexto(lic.CodigoExterno)}</small>
+      <h3 class="fs-6 fw-bold lh-sm mt-2">${limpiarTexto(lic.Nombre || lic.nombre) || 'Sin nombre'}</h3>
+      <small class="text-muted">ID Licitación: ${limpiarTexto(lic.CodigoExterno || lic.codigoExterno)}</small>
     </div>
+
     <ul class="list-group list-group-flush small">
-      ${crearFilaDetalle('Tipo',        lic.Tipo)}
-      ${crearFilaDetalle('Region',      lic.NombreRegion)}
-      ${crearFilaDetalle('Publicación', formatearFecha(lic.FechaPublicacion))}
-      ${crearFilaDetalle('Cierre',      formatearFecha(lic.FechaCierre))}
-      ${crearFilaDetalle('Monto',       lic.MontoEstimado
-          ? '$' + Number(lic.MontoEstimado).toLocaleString('es-CL')
+      ${crearFilaDetalle('Descripción',      lic.Descripcion || lic.descripcion)}
+      ${crearFilaDetalle('Tipo',             lic.Tipo || lic.tipo)}
+      ${crearFilaDetalle('Región',           lic.NombreRegion || lic.nombreRegion)}
+      ${crearFilaDetalle('Moneda',           lic.Moneda || lic.moneda)}
+      ${crearFilaDetalle('Monto disponible', (lic.MontoEstimado || lic.montoEstimado)
+          ? '$' + Number(lic.MontoEstimado || lic.montoEstimado).toLocaleString('es-CL')
           : null)}
-      ${lic.Comprador ? crearFilaDetalle('Organismo', lic.Comprador.NombreOrganismo) : ''}
-      ${lic.Comprador ? crearFilaDetalle('Direccion', lic.Comprador.DireccionUnidad) : ''}
+      
+      ${crearFilaDetalle('Fecha publication', fechaPublicacionRaw ? formatearFecha(fechaPublicacionRaw) : 'No disponible')}
+      ${crearFilaDetalle('Fecha cierre',      fechaCierreRaw
+          ? `${formatearFecha(fechaCierreRaw)} ${diasRestantes}`
+          : 'No disponible')}
+          
+      ${lic.Comprador ? crearFilaDetalle('Organismo',        lic.Comprador.NombreOrganismo || lic.Comprador.nombreOrganismo) : ''}
+      ${lic.Comprador ? crearFilaDetalle('RUT organismo',    lic.Comprador.RutUnidad || lic.Comprador.rutUnidad)       : ''}
+      ${lic.Comprador ? crearFilaDetalle('Unidad',           lic.Comprador.NombreUnidad || lic.Comprador.nombreUnidad)    : ''}
+      ${lic.Comprador ? crearFilaDetalle('Región organismo', lic.Comprador.RegionUnidad || lic.Comprador.regionUnidad)    : ''}
+      ${lic.Comprador ? crearFilaDetalle('Dirección',        lic.Comprador.DireccionUnidad || lic.Comprador.direccionUnidad) : ''}
+      ${lic.Comprador ? crearFilaDetalle('Cantidad compras', lic.Comprador.CantidadCompras || lic.Comprador.cantidadCompras) : ''}
+      ${lic.Comprador ? crearFilaDetalle('Reclamos pago',    lic.Comprador.CantidadReclamos || lic.Comprador.cantidadReclamos): ''}
     </ul>
   `;
-
-  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }

@@ -1,3 +1,12 @@
+:root {
+  --ls-primary: #1a4a7a;
+  --ls-text:    #1c2233;
+  --ls-muted:   #6c757d;
+  --ls-radius:  10px;
+}
+
+.navbar-brand span { color: #f0a500; }
+
 .col-panel-izq {
   background: white;
   border-radius: var(--ls-radius);

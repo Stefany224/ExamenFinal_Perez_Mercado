@@ -1,6 +1,5 @@
 ## Links
 
-- Sitio web: 
 - Video explicativo: []()
 
 ## Integrantes
